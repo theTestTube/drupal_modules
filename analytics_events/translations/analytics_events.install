@@ -1,0 +1,19 @@
+<?php
+// $Id: analytics_events.install,v 1.1.2.1 2009/12/20 01:00:09 quicksketch Exp $
+
+/**
+ * Implementation of hook_install().
+ */
+function analytics_events_install() {
+  // Weight needs to be 1 for compatibility with SpamSpan.
+  // db_query("UPDATE {system} SET weight = 1 WHERE name = 'analytics_events'");
+}
+
+/**
+ * Set the weight of the module to 1 for compatibility with SpamSpan.
+ */
+function analytics_events_update_6100() {
+  $ret = array();
+  // $ret[] = update_sql("UPDATE {system} SET weight = 1 WHERE name = 'analytics_events'");
+  return $ret;
+}

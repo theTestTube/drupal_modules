@@ -1,0 +1,11 @@
+; $Id: analytics_events.module,v 0.1 2011/11/05 01:23:47 theTestTube Exp $
+name = Google Analytics Events
+description = Binds Google Analytics events to jQuery DOM events
+package = Statistics
+core = 6.x
+; Information added by drupal.org packaging script on 2010-05-26
+version = "6.x-0.1"
+core = "6.x"
+project = "analytics_events"
+datestamp = "1274837706"
+

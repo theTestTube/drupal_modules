@@ -1,0 +1,120 @@
+<?php
+// $Id: analytics_events.module,v 0.1 2011/11/05 01:23:47 theTestTube Exp $
+
+function analytics_events_menu() {
+  $items = array();
+  $items['admin/settings/analytics_events'] = array(
+    'title' => 'Google Analytics Events',
+    'description' => 'Track Google Analytics events on the site.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('analytics_events_admin_settings'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer site configuration'),
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function analytics_events_init() {
+  $path = drupal_get_path('module', 'analytics_events');
+
+  $settings = array(
+    // 'aeClass'      => variable_get('analytics_events_ae_class', 'ae'),
+    'aeInclude'     => variable_get('analytics_events_ae_include', 'object'),
+    'aeExclude'     => variable_get('analytics_events_ae_exclude', ''),
+	  'aeEvent'       => variable_get('analytics_events_ae_event', 'mousedown'),
+	  'aeGaEvent'       => variable_get('analytics_events_ae_ga_event', null),
+	  'aeGaCategory'       => variable_get('analytics_events_ae_ga_category', null),
+	  'aeGaLabelAttribute'       => variable_get('analytics_events_ae_ga_label_attribute', 'id'),
+  );
+
+  // The default Google Analytics event and category text must be translated separately to avoid caching.
+  if ($settings['aeGaEvent'] === null) {
+    $settings['aeGaEvent'] = t('Object');
+  }
+  if ($settings['aeGaCategory'] === null) {
+    $settings['aeGaCategory'] = t('Click');
+  }
+
+  drupal_add_js($path . '/analytics_events.js');
+  drupal_add_js(array('analytics_events' => $settings), 'setting');
+}
+
+function analytics_events_admin_settings() {
+  $form = array();
+
+  $patterns = array(
+    '<code>*</code> ' . t('Matches any element.'),
+    '<code>:button</code> ' . t('Matches button elements.'),
+    '<em>parent</em><code> > </code><em>child</em> ' . t('Matches direct child from parents.'),
+    '<code>.</code><em>class</em> ' . t('Matches class elements.'),
+    '<code>A</code> ' . t('Matches HTML links.'),
+    '<code>OBJECT</code> ' . t('Matches HTML objects.'),
+  );
+
+  $form['patterns'] = array(
+    '#tree' => FALSE,
+    '#type' => 'fieldset',
+    '#title' => t('Pattern matching'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' =>
+      '<p>' . t('Google Analytics Events uses patterns (jQuery selector expressions) to match the HTML elements') . '</p>' .
+      t('Here are some common patterns.') .
+      theme('item_list', $patterns) .
+      t('If you wish to use any of the meta-characters such as <code>!"#$%&\'()*+,./:;<=>?@[\\]^`{|}~</code> as a literal part of a name, you must escape the character with two backslashes: <code>\\\\</code>.') .
+      '<p>' . t('Here you have the complete <a href="http://api.jquery.com/category/selectors/">selectors reference from jQuery</a>.') . '</p>',
+  );
+
+  $form['patterns']['analytics_events_ae_include'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Include HTML items matching the pattern'),
+    '#maxlength' => null,
+    '#default_value' => variable_get('analytics_events_ae_include', ''),
+    '#description' => t('Enter a jQuery selector to include HTML items'),
+  );
+
+  $form['patterns']['analytics_events_ae_exclude'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Exclude HTML items matching the pattern'),
+    '#maxlength' => null,
+    '#default_value' => variable_get('analytics_events_ae_exclude', ''),
+    '#description' => t('Enter a jQuery selector to exclude HTML items'),
+  );
+
+  $form['patterns']['analytics_events_ae_event'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Event to capture'),
+    '#maxlength' => null,
+    '#default_value' => variable_get('analytics_events_ae_event', ''),
+    '#description' => t('Enter a text string'),
+  );
+
+  $form['patterns']['analytics_events_ae_ga_event'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Event we send to Google Analytics'),
+    '#maxlength' => null,
+    '#default_value' => variable_get('analytics_events_ae_ga_event', ''),
+    '#description' => t('Enter a text string'),
+  );
+
+  $form['patterns']['analytics_events_ae_ga_category'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Category we send to Google Analytics'),
+    '#maxlength' => NULL,
+    '#default_value' => variable_get('analytics_events_ae_ga_category', ''),
+    '#description' => t('Enter a text string'),
+  );
+
+  $form['patterns']['analytics_events_ae_ga_label_attribute'] = array(
+    '#type' => 'textfield',
+    '#title' => t('HTML item attribute that sets the event label value we send to Google Analytics'),
+    '#maxlength' => NULL,
+    '#default_value' => variable_get('analytics_events_ae_ga_label_attribute', ''),
+    '#description' => t('Enter a text string'),
+  );
+	
+  return system_settings_form($form);
+}

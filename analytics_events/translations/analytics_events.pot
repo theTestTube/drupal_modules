@@ -1,0 +1,26 @@
+# $Id: analytics_events.pot,v 0.1 2011/11/05 01:23:47 theTestTube Exp $
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  analytics_events.module,v 0.1 2011/11/05 01:23:47 theTestTube
+#  analytics_events.info,v 0.1 2011/11/05 01:23:47 theTestTube
+
+msgid ""
+msgstr ""
+"Project-Id-Version: analytics_events.module\n"
+"POT-Creation-Date: 2011-11-06 21:40+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n
+
+#: analytics_events.module:35
+msgid "Object"
+msgstr ""
+
+#: analytics_events.module:38
+msgid "Click"
+msgstr ""
