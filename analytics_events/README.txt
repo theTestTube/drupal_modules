@@ -17,6 +17,15 @@ Then instal Google Analytics Events like you would any other module.
 
 2) Enable the module using Administer -> Modules (/admin/build/modules).
 
-3) No additional configuration is necessary though you may fine-tune settings at
-   Administer -> Site configuration -> Google Analytics Events (/admin/settings/analytics_events).
+3) Fine-tune your settings at Administer -> Site configuration -> Google Analytics Events
+(/admin/settings/analytics_events).
+
+Configure
+---------
+Set the jQuery patterns to include (for example 'object') and optionally exclude.
+
+Set the DOM event you want to capture (for example 'mousedown').
+
+Set the Google Analytics category and name (for example, 'HTML Object', 'Clic') you want to set for
+your event. You can also set an optional atribute (for example, 'id') to set your event label.
 
